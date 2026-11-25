@@ -16,3 +16,5 @@ release/
 .vscode/
 *.iml
 .DS_Store
+
+ignore测试文件.js
