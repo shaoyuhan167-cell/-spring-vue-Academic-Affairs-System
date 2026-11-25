@@ -1,0 +1,31 @@
+# 笔记本部署使用本项目专用 SQL 登录，凭据由启动脚本从本机配置注入。
+spring:
+  # 由部署脚本提供 SQL Server 连接配置，连接池控制同时保留的连接数量。
+  datasource:
+    url: jdbc:sqlserver://${DB_HOST:localhost}:${DB_PORT:1433};databaseName=${DB_NAME:course_selection};encrypt=true;trustServerCertificate=${DB_TRUST_CERTIFICATE:false};loginTimeout=10
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+  # 建库和升级由部署脚本执行，应用启动时跳过自动建表。
+  sql:
+    init:
+      mode: never
+
+# 设置应用监听地址和端口，以及会话 Cookie 的安全选项。
+server:
+  # 正式本机部署默认只监听回环地址，浏览器与 API 共用这里配置的端口。
+  address: 127.0.0.1
+  port: ${SERVER_PORT:8081}
+  servlet:
+    session:
+      cookie:
+        secure: false
+
+# 部署脚本可控制首次启动时是否写入样例数据。
+app:
+  sample-data:
+    enabled: ${APP_SAMPLE_DATA_ENABLED:false}
+    password: ${SAMPLE_DATA_PASSWORD:}

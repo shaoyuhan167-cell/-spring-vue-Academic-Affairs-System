@@ -1,0 +1,40 @@
+# 应用的公共配置。未显式选择环境时启用默认配置。
+spring:
+  application:
+    name: course-selection
+  # 正式应用默认连接 SQL Server。
+  profiles:
+    default: sqlserver
+  # 统一接口序列化日期时间使用的时区。
+  jackson:
+    time-zone: Asia/Shanghai
+  mvc:
+    problemdetails:
+      enabled: false
+
+# 设置登录会话的有效时间和 Cookie 行为。
+server:
+  servlet:
+    session:
+      # 会话长时间无请求后失效。Cookie 由浏览器随请求保存和发送，页面脚本不直接读取会话值。
+      timeout: 30m
+      cookie:
+        http-only: true
+        same-site: lax
+
+# 把列名中的下划线转换为 Java 驼峰命名，缓存范围限制在一条语句。
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    local-cache-scope: STATEMENT
+
+# 设置应用与框架输出日志的级别。
+logging:
+  level:
+    cn.edu.cczu.course: INFO
+
+# 本机免密身份切换由部署开关控制。
+app:
+  # 此开关配合只监听本机地址的部署设置，控制登录页是否可以列出可切换账号。
+  local-account-switch:
+    enabled: ${APP_LOCAL_ACCOUNT_SWITCH_ENABLED:false}

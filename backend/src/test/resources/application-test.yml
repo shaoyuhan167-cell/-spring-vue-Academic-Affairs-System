@@ -1,0 +1,19 @@
+# 集成测试使用独立的 H2 内存数据库。
+spring:
+  datasource:
+    url: jdbc:h2:mem:course_selection;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  # 启动测试时创建表结构和索引。
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-h2.sql,classpath:db/indexes-h2.sql
+      encoding: UTF-8
+
+# 为集成测试初始化所需的账号和课程。
+app:
+  sample-data:
+    enabled: true
+    password: Demo123456!

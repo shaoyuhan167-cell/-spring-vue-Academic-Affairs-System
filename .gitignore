@@ -1,0 +1,18 @@
+# 构建产物与本地依赖
+backend/target/
+frontend/node_modules/
+frontend/dist/
+.tools/
+.runtime/
+release/
+/账号密码/
+*.log
+
+# 本地配置与编辑器文件
+.env
+.env.local
+.env.*.local
+.idea/
+.vscode/
+*.iml
+.DS_Store
